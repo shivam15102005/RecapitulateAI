@@ -1,37 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Check, ChevronDown, Clock3, Save } from 'lucide-react';
-import type { SavedStudySession } from '../types/study';
-
-interface SavedSessionPickerProps {
-  sessions: SavedStudySession[];
-  activeSessionId: string;
-  onSelect: (sessionId: string) => void;
-}
-
-function formatUpdatedAt(value: string): string {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return 'Saved session';
-  return new Intl.DateTimeFormat(undefined, {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  }).format(date);
-}
-
-export default function SavedSessionPicker({ sessions, activeSessionId, onSelect }: SavedSessionPickerProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
-
-  const activeSession = useMemo(
-    () => sessions.find((session) => session.id === activeSessionId) ?? sessions[0] ?? null,
-    [activeSessionId, sessions],
-  );
-
-  useEffect(() => {
     if (!isOpen) return undefined;
-
     const handlePointerDown = (event: PointerEvent) => {
       if (event.target instanceof Node && !rootRef.current?.contains(event.target)) {
         setIsOpen(false);
@@ -52,7 +19,6 @@ export default function SavedSessionPicker({ sessions, activeSessionId, onSelect
         menuButtons[nextIndex]?.focus();
       }
     };
-
     document.addEventListener('pointerdown', handlePointerDown);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -87,12 +53,11 @@ export default function SavedSessionPicker({ sessions, activeSessionId, onSelect
         </span>
         <ChevronDown size={14} className={`shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
       </button>
-
       {isOpen && (
         <div
           role="menu"
           aria-label="Saved study sessions"
-          className="saved-session-menu absolute right-0 z-50 mt-2 max-h-[min(22rem,70vh)] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-2 text-slate-800 shadow-[0_18px_50px_rgba(2,6,23,0.22)] ring-1 ring-black/5 dark:border-slate-700 dark:bg-[#111a2d] dark:text-white dark:shadow-[0_18px_50px_rgba(0,0,0,0.55)] dark:ring-white/5"
+          className="saved-session-menu absolute left-0 right-auto z-50 mt-2 max-h-[min(22rem,70vh)] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-2 text-slate-800 shadow-[0_18px_50px_rgba(2,6,23,0.22)] ring-1 ring-black/5 dark:border-slate-700 dark:bg-[#111a2d] dark:text-white dark:shadow-[0_18px_50px_rgba(0,0,0,0.55)] dark:ring-white/5 sm:left-auto sm:right-0"
         >
           <div className="px-3 pb-2 pt-1">
             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-300">Your study sessions</p>
