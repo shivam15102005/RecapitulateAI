@@ -52,7 +52,7 @@ export default function StudyInputStudio({
         onChange={(event) => onNotesChange(event.target.value)}
         maxLength={30000}
         rows={12}
-        placeholder="Paste your study notes here…\n\nYou can also enter a topic, such as ‘Photosynthesis’ or ‘AC circuit analysis’. The AI will structure it into recall and practice activities."
+        placeholder="Paste your study notes here. You can also enter a topic, such as ‘Photosynthesis’ or ‘AC circuit analysis’. The AI will structure it into recall and practice activities."
         className="field w-full resize-y rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100 dark:focus:bg-slate-900"
       />
       <div className="mt-2 flex items-center justify-between text-xs text-slate-400">
