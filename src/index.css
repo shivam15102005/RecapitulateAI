@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f6f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.45);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.flip-scene {
+  perspective: 1200px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  min-height: 270px;
+  transform-style: preserve-3d;
+  transition: transform 550ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-face-back {
+  transform: rotateY(180deg);
+}
+
+.dark body {
+  background: #0b1120;
+  color: #e5e7eb;
+}
+
+.dark .surface {
+  background: #111a2d;
+  border-color: #263248;
+  color: #e5e7eb;
+}
+
+.dark .surface-muted {
+  background: #172238;
+  border-color: #2b3850;
+  color: #cbd5e1;
+}
+
+.dark .field {
+  background: #0e1729;
+  border-color: #344159;
+  color: #e5e7eb;
+}
+
+.dark .field::placeholder {
+  color: #ffffff;
+  opacity: 0.82;
+}
+
+/* Keep dark-mode typography consistently high-contrast across every component.
+   The !important is intentional: it overrides muted Tailwind dark:text-* utilities
+   so body copy, labels, helper text, and controls all remain pure white. */
+.dark body,
+.dark body :where(*) {
+  color: #ffffff !important;
+}
+
+.dark body :where(input, textarea, select)::placeholder {
+  color: #ffffff !important;
+  opacity: 0.82;
+}
+
+
+/* Native select popups use the operating system's menu palette unless a color
+   scheme is declared. Keep their option rows readable in both themes. */
+select {
+  color-scheme: light;
+}
+
+select option {
+  color: #172033;
+  background-color: #ffffff;
+}
+
+.dark select {
+  color-scheme: dark;
+  color: #ffffff !important;
+  background-color: #0e1729 !important;
+}
+
+.dark select option {
+  color: #ffffff !important;
+  background-color: #111a2d !important;
+}
+
+/* The revealed side of a flashcard has its own cool-cyan accent so the answer
+   is visually distinct from the question face without losing contrast. */
+.dark .flashcard-answer-face {
+  border-color: rgba(103, 232, 249, 0.28) !important;
+  background: linear-gradient(135deg, #12324a 0%, #12283e 52%, #0c1728 100%) !important;
+}
+
+.dark .flashcard-answer-copy {
+  color: #a5f3fc !important;
+  text-shadow: 0 1px 14px rgba(34, 211, 238, 0.08);
+}
+
+/* The saved-session popup is a custom menu rather than a native select. Set
+   its surface explicitly so white text can never sit on a white popup. */
+.dark .saved-session-menu {
+  color: #ffffff !important;
+  background-color: #111a2d !important;
+  border-color: #334155 !important;
+}
+
+.dark .saved-session-menu button {
+  color: #ffffff !important;
+}
+
+.dark .saved-session-menu button:hover {
+  background-color: #1e2b45 !important;
+}
+
+.dark .saved-session-menu button[aria-checked="true"] {
+  background-color: #28365b !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
