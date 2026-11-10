@@ -1,3 +1,35 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Check, ChevronDown, Clock3, Save } from 'lucide-react';
+import type { SavedStudySession } from '../types/study';
+
+interface SavedSessionPickerProps {
+  sessions: SavedStudySession[];
+  activeSessionId: string;
+  onSelect: (sessionId: string) => void;
+}
+
+function formatUpdatedAt(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Saved session';
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+}
+
+export default function SavedSessionPicker({ sessions, activeSessionId, onSelect }: SavedSessionPickerProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const activeSession = useMemo(
+    () => sessions.find((session) => session.id === activeSessionId) ?? sessions[0] ?? null,
+    [activeSessionId, sessions],
+  );
+
+  useEffect(() => {
     if (!isOpen) return undefined;
     const handlePointerDown = (event: PointerEvent) => {
       if (event.target instanceof Node && !rootRef.current?.contains(event.target)) {
